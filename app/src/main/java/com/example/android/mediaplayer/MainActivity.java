@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +45,21 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView)findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int resID = media.get(i).getMediaId();
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
-                if(mediaPlayer.isPlaying() == true){
-                    Toast.makeText(MainActivity.this, "Currently Playing " + media.get(i).getMediaTitle(), Toast.LENGTH_LONG).show();
+                if(!mediaPlayer.isPlaying()){
+                    Toast.makeText(MainActivity.this, "Stop Playing " + media.get(i).getMediaTitle(), Toast.LENGTH_LONG).show();
                     mediaPlayer.stop();
                 }
-                Toast.makeText(MainActivity.this, "Currently Playing " + media.get(i).getMediaTitle(), Toast.LENGTH_LONG).show();
+                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
+                Toast.makeText(MainActivity.this, "Is Playing: " + mediaPlayer.isPlaying(), Toast.LENGTH_SHORT).show();
                 mediaPlayer.start();
             }
         });
+        */
     }
 }
