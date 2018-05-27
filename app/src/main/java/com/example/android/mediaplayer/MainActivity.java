@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,13 +15,24 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static MediaPlayer mediaPlayer;
+    public static int resID;
+    public static String mediaTitle;
+    public static int mediaPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ArrayList<Media> media = new ArrayList<Media>();
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.a_journey_through_grand_oceans);
+
+        final ImageButton previousButton = findViewById(R.id.previous_button);
+        ImageButton pauseButton = findViewById(R.id.pause_button);
+        ImageButton stopButton = findViewById(R.id.stop_button);
+        ImageButton playButton = findViewById(R.id.play_button);
+        ImageButton nextButton = findViewById(R.id.next_button);
+
+        final ArrayList<Media> media = new ArrayList<>();
 
         media.add(new Media("A Journey Through Grand Oceans", R.raw.a_journey_through_grand_oceans));
         media.add(new Media("All Gone, No Escape", R.raw.all_gone_no_escape));
@@ -42,24 +55,80 @@ public class MainActivity extends AppCompatActivity {
         media.add(new Media("Twoson Hits the Road", R.raw.twoson_hits_the_road));
 
         MediaAdapter adapter = new MediaAdapter(this, media);
-        ListView listView = (ListView)findViewById(R.id.listview);
+        ListView listView = findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
-        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int resID = media.get(i).getMediaId();
+                mediaPosition = i;
+                resID = media.get(mediaPosition).getMediaId();
+                mediaTitle = media.get(mediaPosition).getMediaTitle();
+                Toast.makeText(MainActivity.this, "Selected " + mediaTitle, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
-                if(!mediaPlayer.isPlaying()){
-                    Toast.makeText(MainActivity.this, "Stop Playing " + media.get(i).getMediaTitle(), Toast.LENGTH_LONG).show();
-                    mediaPlayer.stop();
-                }
-                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
-                Toast.makeText(MainActivity.this, "Is Playing: " + mediaPlayer.isPlaying(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaPlayer.start();
             }
         });
-        */
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
+                mediaPlayer.stop();
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Paused " + mediaTitle, Toast.LENGTH_SHORT).show();
+                mediaPlayer.pause();
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
+
+                if(mediaPosition < 1){
+                    mediaPosition = media.size() - 1;
+                }else{
+                    mediaPosition--;
+                }
+
+                resID = media.get(mediaPosition).getMediaId();
+                mediaTitle = media.get(mediaPosition).getMediaTitle();
+                Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
+
+                if(mediaPosition >= media.size() - 1){
+                    mediaPosition = 0;
+                }else{
+                    mediaPosition++;
+                }
+
+                resID = media.get(mediaPosition).getMediaId();
+                mediaTitle = media.get(mediaPosition).getMediaTitle();
+                Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
