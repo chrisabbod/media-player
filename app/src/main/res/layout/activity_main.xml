@@ -16,37 +16,50 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:background="#9479cb"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/previous_button"
-            style="@style/ButtonTheme"
+        <TextView
+            android:id="@+id/media_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_previous_button" />
+            android:layout_gravity="center"
+            android:text="TEST MEDIA TITLE"/>
 
-        <ImageButton
-            android:id="@+id/stop_button"
-            style="@style/ButtonTheme"
-            android:src="@drawable/ic_stop_button" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="#9479cb"
+            android:orientation="horizontal"
+            android:paddingLeft="30dp">
 
-        <ImageButton
-            android:id="@+id/pause_button"
-            style="@style/ButtonTheme"
-            android:src="@drawable/ic_pause_button" />
+            <ImageButton
+                android:id="@+id/previous_button"
+                style="@style/ButtonTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_previous_button" />
 
-        <ImageButton
-            android:id="@+id/play_button"
-            style="@style/ButtonTheme"
-            android:src="@drawable/ic_play_button"/>
+            <ImageButton
+                android:id="@+id/stop_button"
+                style="@style/ButtonTheme"
+                android:src="@drawable/ic_stop_button" />
 
-        <ImageButton
-            android:id="@+id/next_button"
-            style="@style/ButtonTheme"
-            android:src="@drawable/ic_next_button" />
+            <ImageButton
+                android:id="@+id/pause_button"
+                style="@style/ButtonTheme"
+                android:src="@drawable/ic_pause_button" />
+
+            <ImageButton
+                android:id="@+id/play_button"
+                style="@style/ButtonTheme"
+                android:src="@drawable/ic_play_button"/>
+
+            <ImageButton
+                android:id="@+id/next_button"
+                style="@style/ButtonTheme"
+                android:src="@drawable/ic_next_button" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
