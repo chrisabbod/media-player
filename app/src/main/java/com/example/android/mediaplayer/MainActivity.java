@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,16 +25,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.a_journey_through_grand_oceans);  //initialize media player with the first song on list
-
-        final ImageButton previousButton = findViewById(R.id.previous_button);
+        ImageButton previousButton = findViewById(R.id.previous_button);
         ImageButton pauseButton = findViewById(R.id.pause_button);
         ImageButton stopButton = findViewById(R.id.stop_button);
         ImageButton playButton = findViewById(R.id.play_button);
         ImageButton nextButton = findViewById(R.id.next_button);
+        final TextView mediaTitleTextView = findViewById(R.id.media_title_text_view);
 
         final ArrayList<Media> media = new ArrayList<>();
-
         media.add(new Media("A Journey Through Grand Oceans", R.raw.a_journey_through_grand_oceans));
         media.add(new Media("All Gone, No Escape", R.raw.all_gone_no_escape));
         media.add(new Media("Anxious Heart", R.raw.anxious_heart));
@@ -54,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         media.add(new Media("The Poem for Everyone's Soul", R.raw.the_poem_for_everyones_soul));
         media.add(new Media("Twoson Hits the Road", R.raw.twoson_hits_the_road));
 
+        resID = media.get(0).getMediaId();
+        mediaTitle = media.get(0).getMediaTitle();
+        mediaPlayer = MediaPlayer.create(MainActivity.this, media.get(0).getMediaId());  //initialize media player with the first song on list
+        mediaTitleTextView.setText(media.get(0).getMediaTitle());
+
         //Setup adapter and bind view to listview activity
         MediaAdapter adapter = new MediaAdapter(this, media);
         ListView listView = findViewById(R.id.listview);
@@ -66,15 +70,18 @@ public class MainActivity extends AppCompatActivity {
                 mediaPosition = i;
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
-                Toast.makeText(MainActivity.this, "Selected " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Selected " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
+                mediaTitleTextView.setText(mediaTitle);
+
                 if(mediaPlayer == null){
                     mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 }
@@ -85,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
+                mediaTitleTextView.setText(" ");
                 mediaPlayer.stop();
                 releaseMediaPlayer();
             }
@@ -94,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Paused " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Paused " + mediaTitle, Toast.LENGTH_SHORT).show();
+                mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer.pause();
             }
         });
@@ -114,9 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 mediaPlayer.start();
-                Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,9 +147,10 @@ public class MainActivity extends AppCompatActivity {
 
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 mediaPlayer.start();
-                Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
     }
