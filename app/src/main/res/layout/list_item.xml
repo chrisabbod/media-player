@@ -15,9 +15,11 @@
         android:layout_gravity="center"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:background="#cb7987"
-        android:padding="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"/>
+        android:background="#E1F5FE"
+        android:padding="8dp"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </LinearLayout>

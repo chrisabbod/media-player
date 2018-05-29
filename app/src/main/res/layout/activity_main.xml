@@ -17,7 +17,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#90A4AE">
 
         <TextView
             android:id="@+id/media_title_text_view"
@@ -32,9 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:background="#9479cb"
+            android:background="#90A4AE"
             android:orientation="horizontal"
-            android:paddingLeft="30dp">
+            android:paddingLeft="24dp">
 
             <ImageButton
                 android:id="@+id/previous_button"
