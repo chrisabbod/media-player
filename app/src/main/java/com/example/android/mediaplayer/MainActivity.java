@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaPlayer.stop();
-                releaseMediaPlayer();
             }
         });
 
@@ -111,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
+                mediaPlayer.start();
                 Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
@@ -120,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.stop();
+                    releaseMediaPlayer();
+                    //Toast.makeText(MainActivity.this, "Released " + mediaTitle, Toast.LENGTH_SHORT).show();
                 }
 
                 if(mediaPosition >= media.size() - 1){
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
+                mediaPlayer.start();
                 Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
