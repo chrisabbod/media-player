@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.a_journey_through_grand_oceans);
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.a_journey_through_grand_oceans);  //initialize media player with the first song on list
 
         final ImageButton previousButton = findViewById(R.id.previous_button);
         ImageButton pauseButton = findViewById(R.id.pause_button);
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         media.add(new Media("The Poem for Everyone's Soul", R.raw.the_poem_for_everyones_soul));
         media.add(new Media("Twoson Hits the Road", R.raw.twoson_hits_the_road));
 
+        //Setup adapter and bind view to listview activity
         MediaAdapter adapter = new MediaAdapter(this, media);
         ListView listView = findViewById(R.id.listview);
         listView.setAdapter(adapter);
@@ -61,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                releaseMediaPlayer();
                 mediaPosition = i;
                 resID = media.get(mediaPosition).getMediaId();
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
+                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 Toast.makeText(MainActivity.this, "Selected " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaPlayer.start();
             }
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaPlayer.stop();
+                releaseMediaPlayer();
             }
         });
 
@@ -130,5 +133,22 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mediaPlayer != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mediaPlayer.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mediaPlayer = null;
+        }
     }
 }
