@@ -72,14 +72,12 @@ public class MainActivity extends AppCompatActivity {
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
                 mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
-                //Toast.makeText(MainActivity.this, "Selected " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaTitleTextView.setText(mediaTitle);
 
                 if(mediaPlayer == null){
@@ -92,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
-                mediaTitleTextView.setText(" ");
                 mediaPlayer.stop();
                 releaseMediaPlayer();
             }
@@ -102,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "Paused " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer.pause();
             }
@@ -111,9 +106,11 @@ public class MainActivity extends AppCompatActivity {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mediaPlayer.isPlaying()){
+                if(mediaPlayer != null){
                     mediaPlayer.stop();
+                    releaseMediaPlayer();
                 }
+
 
                 if(mediaPosition < 1){
                     mediaPosition = media.size() - 1;
@@ -126,17 +123,15 @@ public class MainActivity extends AppCompatActivity {
                 mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 mediaPlayer.start();
-                //Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mediaPlayer.isPlaying()){
+                if(mediaPlayer != null){
                     mediaPlayer.stop();
                     releaseMediaPlayer();
-                    //Toast.makeText(MainActivity.this, "Released " + mediaTitle, Toast.LENGTH_SHORT).show();
                 }
 
                 if(mediaPosition >= media.size() - 1){
@@ -150,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
                 mediaPlayer.start();
-                //Toast.makeText(MainActivity.this, "Current Song " + mediaTitle, Toast.LENGTH_SHORT).show();
             }
         });
     }
