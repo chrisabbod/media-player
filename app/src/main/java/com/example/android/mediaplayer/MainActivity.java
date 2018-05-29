@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Playing " + mediaTitle, Toast.LENGTH_SHORT).show();
+                if(mediaPlayer == null){
+                    mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
+                }
                 mediaPlayer.start();
             }
         });
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Stopped " + mediaTitle, Toast.LENGTH_SHORT).show();
                 mediaPlayer.stop();
+                releaseMediaPlayer();
             }
         });
 
