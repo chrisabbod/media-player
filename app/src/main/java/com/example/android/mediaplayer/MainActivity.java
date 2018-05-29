@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         MediaAdapter adapter = new MediaAdapter(this, media);
         ListView listView = findViewById(R.id.listview);
         listView.setAdapter(adapter);
-
+        //TODO: Make media player continue playing after screen orientation change
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -90,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayer.stop();
-                releaseMediaPlayer();
+                if(mediaPlayer != null){
+                    mediaPlayer.stop();
+                    releaseMediaPlayer();
+                }
             }
         });
 
