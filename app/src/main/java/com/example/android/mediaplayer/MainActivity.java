@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaTitle = media.get(mediaPosition).getMediaTitle();
                 mediaTitleTextView.setText(mediaTitle);
                 mediaPlayer = MediaPlayer.create(MainActivity.this, resID);
+                mediaPlayer.start();
             }
         });
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaTitleTextView.setText(mediaTitle);
+                mediaTitleTextView.setText(mediaTitle + ": Paused");
                 mediaPlayer.pause();
             }
         });
